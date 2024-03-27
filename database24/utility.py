@@ -1,28 +1,8 @@
 import sqlite3
-import hashlib
-import utility
-# Create or connect to a database
-conn = sqlite3.connect('cars.db')
-c = conn.cursor()
-
-while True:
-    slave = input("enter command...")
-
-#ask what everything dose
-    if slave == "/?":
-        print("Commands list:\n/add_car\n/add_engine\n/com\n/view_cars\n/view_engines\n/del\n/quit")
-
-    if slave == "/-_-":
-        userpass = input("input password").encode('utf-8')
-        hash_object = hashlib.sha256(userpass)
-        hex_dig = hash_object.hexdigest()
-        #print(hex_dig)
-        if hex_dig == "ce9036a66131c62790eeb5f07d68a21776dd03c2f3ab302e51c62e8ce96ebecb":
-            print("pass")
-        else:
-            print("fail")
-# Insert car data into the car table 
-    if slave == "/add_car":
+# Insert car (and enigne if needed) data into the car table 
+def add():
+        conn = sqlite3.connect('cars.db')
+        c = conn.cursor()
         print("select make acquardingly")
         c.execute("SELECT * FROM make")
         for row in c.fetchall():
@@ -50,48 +30,50 @@ while True:
         for row in c.fetchall():
              print(row)
         drive = input(":")
+        conn.close()
 
         c.execute("INSERT INTO car (make, model, engine, stockhp, stocktorque, image, drive) VALUES (?, ?, ?, ?, ?, ?, ?)", (make, model, engine, stockhp, stocktorque, image, drive))
 
-
-
-
 # Insert engine data into the car table 
-    if slave == "/add_engine":
+def add_engine():
+        conn = sqlite3.connect('cars.db')
+        c = conn.cursor()
         name = input("name")
         c.execute("INSERT INTO engine (engine_name ) VALUES (?)", (name,))
-
-
-
+        conn.close()
 
 # Commit changes
-    if slave == "/com":
+def save_changes():
+        conn = sqlite3.connect('cars.db')
+        c = conn.cursor()
         conn.commit()
         print("saved")
-
-
-
+        conn.close()
+        
 # Fetch and print car table
-    if slave == "/view_cars":
+def veiw_cars():
+        conn = sqlite3.connect('cars.db')
+        c = conn.cursor()
         c.execute("SELECT * FROM car")
         print("All car:")
         for row in c.fetchall():
             print(row)
+        conn.close()
 
-
-# Fetch and print all rows
-    if slave == "/view_engines":
+# Fetch and print all engines
+def veiw_engines():
+        conn = sqlite3.connect('cars.db')
+        c = conn.cursor()
         c.execute("SELECT * FROM engine")
         print("All car:")
         for row in c.fetchall():
             print(row)
-
-# Mr Rodkiss easteregg
-    if slave == "/fish":
-        print("🙄")
+        conn.close()
 
 # Delete data from the table
-    if slave == "/del":
+def delete():
+        conn = sqlite3.connect('cars.db')
+        c = conn.cursor()
         table = input("what would you like to delete (car=1) (engine=2)")
         if table == "1":
             c.execute("SELECT * FROM car")
@@ -105,23 +87,7 @@ while True:
                 print(row)
             what = input()
             c.execute("DELETE FROM engine WHERE engine_id = ?", (what,))
+            conn.close()
 
-
-# Update data in the table
-#c.execute("UPDATE users SET age = ? WHERE name = ?", (35, 'Alice'))
-
-# Delete data from the table
-#c.execute("DELETE FROM car WHERE id = ?", ('Bob',))
-
-# Fetch and print all rows again
-#c.execute("SELECT * FROM users")
-#print("Updated users:")
-#for row in c.fetchall():
-#    print(row)
-
-# Close the connection
-    if slave == "/quit":
-        conn.close()
-        break
-
-print("you did good")
+def test():
+      print("hello")
