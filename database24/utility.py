@@ -30,9 +30,9 @@ def add():
         for row in c.fetchall():
              print(row)
         drive = input(":")
-        conn.close()
-
         c.execute("INSERT INTO car (make, model, engine, stockhp, stocktorque, image, drive) VALUES (?, ?, ?, ?, ?, ?, ?)", (make, model, engine, stockhp, stocktorque, image, drive))
+        conn.commit()
+        conn.close()
 
 # Insert engine data into the car table 
 def add_engine():
@@ -81,12 +81,15 @@ def delete():
                 print(row)
             what = input()
             c.execute("DELETE FROM car WHERE car_id = ?", (what,))
+            conn.commit()
+            conn.close()
         if table == "2":
             c.execute("SELECT * FROM engine")
             for row in c.fetchall():
                 print(row)
             what = input()
             c.execute("DELETE FROM engine WHERE engine_id = ?", (what,))
+            conn.commit()
             conn.close()
 
 def test():

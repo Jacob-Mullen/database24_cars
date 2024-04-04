@@ -54,3 +54,7 @@ while True:
         break
 
 print("you did good")
+
+#SELECT car.make,model,engine,stockhp FROM car
+#JOIN make
+#ON car.make=make.id
