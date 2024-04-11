@@ -73,7 +73,7 @@ while True:
 
 # Fetch and print car table
     if slave == "/view_cars":
-        c.execute("select car.make, car.model, car.engine, car.stockhp, car.stocktorque, make.whatmake from car join make on car.make = make.id")
+        c.execute("select make.whatmake, car.model, car.engine, car.stockhp, car.stocktorque from car join make on car.make = make.id")
         print("All car:")
         for row in c.fetchall():
             print(row)
