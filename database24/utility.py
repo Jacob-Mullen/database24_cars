@@ -54,7 +54,7 @@ def save_changes():
 def veiw_cars():
         conn = sqlite3.connect('cars.db')
         c = conn.cursor()
-        c.execute("SELECT * FROM car")
+        c.execute("select make.whatmake, car.model, car.engine, car.stockhp, car.stocktorque from car join make on car.make = make.id")
         print("All car:")
         for row in c.fetchall():
             print(row)
@@ -65,7 +65,7 @@ def veiw_engines():
         conn = sqlite3.connect('cars.db')
         c = conn.cursor()
         c.execute("SELECT * FROM engine")
-        print("All car:")
+        print("All engines:")
         for row in c.fetchall():
             print(row)
         conn.close()
